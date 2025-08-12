@@ -1,0 +1,13 @@
+// Variables personnalisées AVANT Bootstrap
+$primary: #0d6efd;
+$danger: #dc3545;
+$navbar-dark-color: #fff;
+$navbar-dark-hover-color: #ffc107;
+
+// Import Bootstrap
+@use "bootstrap/scss/bootstrap";
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: .2px;
+}

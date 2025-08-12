@@ -7,7 +7,20 @@
             "email": "pierre.couderc06@gmail.com"
         }
     ],
+    "scripts": {
+        "analyse": "phpstan analyse",
+        "test": "phpunit"
+    },
     "require": {
         "klein/klein": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12.3"
     }
 }

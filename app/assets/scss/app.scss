@@ -1,0 +1,8 @@
+// Variables AVANT l'import Bootstrap (v5)
+$primary: #0d6efd;
+$border-radius: .5rem;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// Styles app
+.navbar-brand { font-weight: 700; }
