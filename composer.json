@@ -1,0 +1,13 @@
+{
+    "name": "pierre/application-mvc-php",
+    "description": "Mobilités Inter-sites",
+    "authors": [
+        {
+            "name": "pierre",
+            "email": "pierre.couderc06@gmail.com"
+        }
+    ],
+    "require": {
+        "klein/klein": "^2.1"
+    }
+}
