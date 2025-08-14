@@ -3,15 +3,15 @@
 /**
  * Layout principal
  *
- * @var string $title
- * @var string $content
+ * @var string
+ * @var string 
  */
 
 use App\Core\Auth;
 
 Auth::start();
-$user = Auth::user();                 // array{id:int,first_name:string,last_name:string,role?:string}|null
-$role = $user['role'] ?? null;        // 'admin' | 'user' | null
+$user = Auth::user();
+$role = $user['role'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,43 +23,49 @@ $role = $user['role'] ?? null;        // 'admin' | 'user' | null
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/theme.css">
 </head>
 
 <body>
+  <?php
+  $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+  ?>
 
-  <?php require __DIR__ . '/components/header.php'; ?>
+  <body class="page-<?= trim(str_replace('/', '-', $currentPath), '-') ?>">
+    <?php require __DIR__ . '/components/header.php'; ?>
 
-  <main class="container py-4">
-    <?php
-    // flash
-    if (!empty($_SESSION['flash'])) {
-      $flash = $_SESSION['flash'];
+    <main class="container py-4">
+      <?php
+      // flash
+      if (!empty($_SESSION['flash'])) {
+        $flash = $_SESSION['flash'];
 
-      if (is_string($flash)) {
-        $type = 'info';
-        $msg  = $flash;
-      } elseif (is_array($flash)) {
-        $type = $flash['type'] ?? 'info';
-        $msg  = $flash['msg']  ?? '';
-      } else {
-        $type = 'info';
-        $msg  = '';
+        if (is_string($flash)) {
+          $type = 'info';
+          $msg  = $flash;
+        } elseif (is_array($flash)) {
+          $type = $flash['type'] ?? 'info';
+          $msg  = $flash['msg']  ?? '';
+        } else {
+          $type = 'info';
+          $msg  = '';
+        }
+
+        if ($msg !== '') {
+          echo '<div class="alert alert-' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '">'
+            . htmlspecialchars($msg, ENT_QUOTES, 'UTF-8')
+            . '</div>';
+        }
+
+        unset($_SESSION['flash']);
       }
+      ?>
+      <?= (string) $content ?>
+    </main>
+    <?php require __DIR__ . '/components/footer.php'; ?>
 
-      if ($msg !== '') {
-        echo '<div class="alert alert-' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '">'
-          . htmlspecialchars($msg, ENT_QUOTES, 'UTF-8')
-          . '</div>';
-      }
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
-      unset($_SESSION['flash']);
-    }
-    ?>
-    <?= (string) $content ?>
-  </main>
-
-  <!-- JS -->
-  <script src="/assets/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 
 </html>
