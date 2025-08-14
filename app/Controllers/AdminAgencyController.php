@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Klein\Request;
+use Klein\Response;
 use App\Core\View;
 use App\Repositories\AgencyRepository;
 
@@ -42,8 +44,9 @@ class AdminAgencyController
         exit;
     }
 
-    public function editForm(int $id): string
+    public function editForm(Request $request, Response $response): string
     {
+        $id = (int) $request->param('id'); // ou $request->id
         $repo = new AgencyRepository();
         $agency = $repo->find($id);
         if (!$agency) {
@@ -59,25 +62,30 @@ class AdminAgencyController
         ]);
     }
 
-    public function update(int $id): void
+    public function update(Request $request, Response $response): void
     {
         $this->assertCsrf();
+        $id   = (int) $request->param('id'); // récupéré depuis l’URL
         $name = trim((string)($_POST['name'] ?? ''));
         $city = trim((string)($_POST['city'] ?? ''));
+
         if ($name === '' || $city === '') {
             $this->flash('Veuillez renseigner nom et ville', 'danger');
             header('Location: /admin/agencies/' . $id . '/edit');
             exit;
         }
+
         (new AgencyRepository())->update($id, $name, $city);
         $this->flash('Agence modifiée', 'success');
         header('Location: /admin/agencies');
         exit;
     }
 
-    public function delete(int $id): void
+    public function delete(Request $request, Response $response): void
     {
         $this->assertCsrf();
+        $id = (int) $request->param('id');
+
         $repo = new AgencyRepository();
         if ($repo->tripsCount($id) > 0) {
             $this->flash('Suppression impossible : agence utilisée par des trajets', 'warning');
@@ -104,4 +112,3 @@ class AdminAgencyController
         $_SESSION['flash'] = ['msg' => $msg, 'type' => $type];
     }
 }
-?>
