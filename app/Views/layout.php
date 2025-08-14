@@ -33,8 +33,25 @@ $role = $user['role'] ?? null;        // 'admin' | 'user' | null
     <?php
     // flash
     if (!empty($_SESSION['flash'])) {
-      echo '<div class="alert alert-' . htmlspecialchars($_SESSION['flash']['type']) . '">'
-        . htmlspecialchars($_SESSION['flash']['msg']) . '</div>';
+      $flash = $_SESSION['flash'];
+
+      if (is_string($flash)) {
+        $type = 'info';
+        $msg  = $flash;
+      } elseif (is_array($flash)) {
+        $type = $flash['type'] ?? 'info';
+        $msg  = $flash['msg']  ?? '';
+      } else {
+        $type = 'info';
+        $msg  = '';
+      }
+
+      if ($msg !== '') {
+        echo '<div class="alert alert-' . htmlspecialchars($type, ENT_QUOTES, 'UTF-8') . '">'
+          . htmlspecialchars($msg, ENT_QUOTES, 'UTF-8')
+          . '</div>';
+      }
+
       unset($_SESSION['flash']);
     }
     ?>

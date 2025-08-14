@@ -11,7 +11,8 @@ use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 use App\Controllers\AdminUserController;
 use App\Controllers\AdminAgencyController;
-use App\Controllers\Admin\TripController as AdminTripController; // 👈 le bon contrôleur
+use App\Controllers\Admin\TripController as AdminTripController;
+use App\Controllers\TripController;
 
 /** @var Klein $router */
 
@@ -72,9 +73,13 @@ $router->with('/admin', function ($r) {
 
     // Trips (liste + suppression)
     $trip = new AdminTripController();
-    $r->respond('GET',  '/trips',                   [$trip, 'index']);     // à implémenter si besoin
-    $r->respond('GET',  '/trips/[i:id]/delete',     [$trip, 'destroy']);   // ou POST si tu préfères
-    // Si tu veux faire la suppression en POST (recommandé) :
-    // $r->respond('POST', '/trips/[i:id]/delete',   [$trip, 'destroy']);
+    $r->respond('GET',  '/trips',                   [$trip, 'index']); 
+    $r->respond('GET',  '/trips/[i:id]/delete',     [$trip, 'destroy']); 
+
 });
-?>
+
+$tripController = new TripController();
+
+$router->respond('GET',  '/trips/[i:id]/edit',   [$tripController, 'edit']);
+$router->respond('POST', '/trips/[i:id]/update', [$tripController, 'update']);
+$router->respond('POST', '/trips/[i:id]/delete', [$tripController, 'delete']);
