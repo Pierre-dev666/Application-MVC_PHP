@@ -53,10 +53,8 @@ $router->onHttpError(function ($code) {
 
 // Zone admin
 $router->with('/admin', function ($r) {
-
-    // Garde globale admin
-    $r->respond('*', function () {
-        \App\Core\Guard::requireAdmin();
+    $r->respond('GET', '', function ($req, $res) {
+        return $res->redirect('/admin/');
     });
 
     $r->respond('GET',  '/',        [new AdminController(),     'dashboard']);
@@ -73,9 +71,8 @@ $router->with('/admin', function ($r) {
 
     // Trips (liste + suppression)
     $trip = new AdminTripController();
-    $r->respond('GET',  '/trips',                   [$trip, 'index']); 
-    $r->respond('GET',  '/trips/[i:id]/delete',     [$trip, 'destroy']); 
-
+    $r->respond('GET',  '/trips',                   [$trip, 'index']);
+    $r->respond('GET',  '/trips/[i:id]/delete',     [$trip, 'destroy']);
 });
 
 $tripController = new TripController();

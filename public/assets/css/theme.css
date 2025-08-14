@@ -1,0 +1,100 @@
+/* ============ Palette ============ */
+:root {
+
+    --app-text: #00497c;
+    --app-primary: #0074c7;
+    --app-on-primary: #f1f8fc;
+    --app-surface: #f1f8fc;
+    --app-header: #384050;
+    --app-on-header: #f1f8fc;
+}
+
+/* ============ Typo & couleurs globales ============ */
+body {
+    color: var(--app-text);
+}
+
+
+a {
+    color: var(--app-text);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ============ Layout ============ */
+main {
+    background: var(--app-surface);
+    border-radius: .5rem;
+}
+
+/* Header / Footer blocs (ajoute ces classes dans tes partials) */
+.site-header,
+footer {
+    background: var(--app-header);
+    color: var(--app-on-header) !important;
+}
+
+.site-header a,
+.site-footer a {
+    color: var(--app-on-header);
+    font-size: larger;
+
+}
+
+.site-header a:hover,
+.site-footer a:hover {
+    opacity: .9;
+    text-decoration: none;
+}
+
+.page-login .btn-login {
+    visibility: hidden !important;
+}
+
+/* ============ Boutons Bootstrap ============ */
+.btn-primary {
+    --bs-btn-bg: var(--app-primary);
+    --bs-btn-border-color: var(--app-primary);
+    --bs-btn-color: var(--app-on-primary);
+
+    --bs-btn-hover-bg: #0063a9;
+    --bs-btn-hover-border-color: #0060a3;
+
+    --bs-btn-active-bg: #005a99;
+    --bs-btn-active-border-color: #00548f;
+
+    --bs-btn-disabled-bg: #7dbce6;
+    --bs-btn-disabled-border-color: #7dbce6;
+    --bs-btn-disabled-color: var(--app-on-primary);
+}
+
+.btn-outline-light {
+    color: #384050 !important;
+}
+
+
+.site-header .btn-link,
+.site-footer .btn-link {
+    color: var(--app-on-header);
+}
+
+/* ============ Formulaires (lisibilité) ============ */
+.form-control,
+.form-select {
+    color: var(--app-text);
+    border-color: #c9d7e3;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #8dbdea;
+    box-shadow: 0 0 0 .25rem rgba(0, 116, 199, .25);
+}
+
+
+.table {
+    color: var(--app-text);
+}
